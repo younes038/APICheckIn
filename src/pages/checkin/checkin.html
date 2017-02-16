@@ -1,0 +1,24 @@
+<!--
+  Generated template for the Checkin page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>checkin</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>A list of last checkins</ion-list-header>
+    <ion-item *ngFor="let c of checkin">
+      <!--<ion-icon name="ionic" item-right></ion-icon>-->
+      <h2>{{c.id}}</h2><span>{{c.user.name}}</span>
+    </ion-item>
+  </ion-list>
+</ion-content>
