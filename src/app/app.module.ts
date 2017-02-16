@@ -1,8 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
+
+import { MapsPage } from '../pages/maps/maps';
+import { LoginPage } from '../pages/login/login';
+import { CheckInPage } from '../pages/checkin/checkin';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CheckInService } from '../services/checkin.service';
@@ -10,8 +12,9 @@ import { CheckInService } from '../services/checkin.service';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    MapsPage,
+    LoginPage,
+    CheckInPage,
     HomePage,
     TabsPage
   ],
@@ -21,8 +24,9 @@ import { CheckInService } from '../services/checkin.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    MapsPage,
+    LoginPage,
+    CheckInPage,
     HomePage,
     TabsPage
   ],
