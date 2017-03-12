@@ -37,7 +37,11 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-compat",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-googlemaps",
+    "com.googlemaps.ios"
   ],
   "cordovaPlatforms": [],
   "description": "APICheckIn: An Ionic project"

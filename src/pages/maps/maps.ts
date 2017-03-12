@@ -1,46 +1,86 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Geolocation } from 'ionic-native';
 
-declare var google;
+import {
+GoogleMap,
+GoogleMapsEvent,
+GoogleMapsLatLng,
+CameraPosition,
+GoogleMapsMarkerOptions,
+GoogleMapsMarker,
+Geolocation
+} from 'ionic-native';
+
+import { CheckInService } from '../../services/checkin.service';
+import { CheckIn } from '../../services/checkin'
+
 
 /*
-  Generated class for the Maps page.
+Generated class for the Maps page.
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+See http://ionicframework.com/docs/v2/components/#navigation for more info on
+Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-maps',
-  templateUrl: 'maps.html'
+	selector: 'page-maps',
+	templateUrl: 'maps.html'
 })
 export class MapsPage {
+	
+	checkins: Array<CheckIn>
 
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
+	constructor(public navCtrl: NavController, public navParams: NavParams, private checkinService: CheckInService) {
+		this.checkinService = checkinService;
+		this.checkinService.getListCheckIn().subscribe(
+			data => {
+				this.checkins = data;
+			},
+			err => {
+				console.log(err);
+			},
+			() => console.log('Get checkin completed')
+		);
+	}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+	// Load map only after view is initialize
+	ngAfterViewInit() {
+		this.loadMap();
+	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MapsPage');
-    this.loadMap();
-  }
+	loadMap() {
+		// create a new map by passing HTMLElement
+		let element: HTMLElement = document.getElementById('map');
+		let map = new GoogleMap(element);
+		
+		// listen to MAP_READY event
+		map.one(GoogleMapsEvent.MAP_READY).then(() => {
+			// get user current position
+			Geolocation.getCurrentPosition().then((pos) => {
+				// create LatLng object
+				let geoloc: GoogleMapsLatLng = new GoogleMapsLatLng(pos.coords.latitude, pos.coords.longitude);
 
-  loadMap(){
-    Geolocation.getCurrentPosition().then((position) => {
-      let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-      let mapOptions = {
-        center: latLng,
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
- 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
- 
-    }, (err) => {
-      console.log(err);
-    });
-  }
+				// create CameraPosition
+				let position: CameraPosition = {
+					target: geoloc,
+					zoom: 13
+				};
 
+				// move the map's camera to position
+				map.moveCamera(position); // works on iOS and Android
+			}, (err) => {
+				console.log(err);
+			});
+
+			// add marker to map for each checkin (works only when map ready)
+			this.checkins.forEach((c, index, array) => {
+				// create new marker
+				let markerOptions: GoogleMapsMarkerOptions = {
+					position: new GoogleMapsLatLng(c.lat, c.lng),
+					title: `Marker ${index}`
+				};
+
+				map.addMarker(markerOptions);
+			});
+		});
+	}
 }
