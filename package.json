@@ -41,7 +41,8 @@
     "cordova-plugin-compat",
     "cordova-plugin-geolocation",
     "cordova-plugin-googlemaps",
-    "com.googlemaps.ios"
+    "com.googlemaps.ios",
+    "cordova-plugin-camera"
   ],
   "cordovaPlatforms": [],
   "description": "APICheckIn: An Ionic project"
