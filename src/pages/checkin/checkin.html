@@ -7,18 +7,30 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>checkin</ion-title>
+    <ion-title>Les derniers checkins</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only class="button button-icon" (click)="presentModal()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding>   
   <ion-list>
-    <ion-list-header>A list of last checkins</ion-list-header>
-    <ion-item *ngFor="let c of checkin">
-      <!--<ion-icon name="ionic" item-right></ion-icon>-->
-      <h2>{{c.id}}</h2><span>{{c.user.name}}</span>
+    <ion-item *ngFor="let c of checkins" (click)="gotoDetail(c.id)">
+      <ion-thumbnail item-left>
+        <img alt="" src="{{c.image_path}}" onError="this.src='./assets/images/default.jpg';"/>
+      </ion-thumbnail>
+      <h2>{{c.id}}</h2>
+      <span>{{c.user.name}}</span>
+      <ion-icon name="arrow-forward" item-right></ion-icon>
     </ion-item>
   </ion-list>
+  <ion-refresher (ionRefresh)="refreshList($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
 </ion-content>

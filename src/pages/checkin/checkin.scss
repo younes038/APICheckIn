@@ -1,3 +1,24 @@
 page-checkin {
 
+	.content {
+		background-color: #ececec;
+
+		ion-list-header {
+			margin-top: 10px;
+			text-align: center;
+		}
+
+		.item {
+			margin: 8px 0;
+			padding: 0;
+			box-shadow: 1px 1px 4px 0px #928c8c;
+
+			.item-inner {
+				border: none;
+			}
+			ion-thumbnail {
+				margin-left: 8px;
+			}
+		}
+	}
 }
