@@ -57,16 +57,34 @@ export class CheckInService {
     let body = JSON.stringify(checkin);
     let headers = new Headers({'Content-Type': 'x-www-form-urlencoded', 'Authorization': `Bearer ${this.authToken}`});
     
-    this.http
-         .post(this.baseURL+`checkin`, body, {headers: headers}).subscribe(data => {});
+    return new Promise(resolve => {
+      this.http
+        .post(this.baseURL+`checkin`, body, {headers: headers}).subscribe(data => {
+          if(data.json()) {
+            resolve(data.json());
+          } else {
+            resolve(false);
+          }
+      });
+    });
   }
 
   signup(user) {
     let body = JSON.stringify(user);
     let headers = new Headers({'Content-Type': 'x-www-form-urlencoded', 'Authorization': `Bearer ${this.authToken}`});
     
-    this.http
-         .post(this.baseURL+`signup`, body, {headers: headers}).subscribe(data => {});
+    return new Promise(resolve => {
+      this.http
+        .post(this.baseURL+`signup`, body, {headers: headers}).subscribe(data => {
+          if(data.json().token) {
+            this.authToken = data.json().token;
+            localStorage.setItem('token', this.authToken);
+            resolve(this.authToken);
+          } else {
+          resolve(false);
+          }
+      });
+    });
   }
 
   getAccount(): Observable<User> {
@@ -76,12 +94,20 @@ export class CheckInService {
                .get(this.baseURL+`account`, {headers: headers})
                .map(response => response.json() as User);
   }
-
+  
   updateAccount(user) {
     let body = JSON.stringify(user);
     let headers = new Headers({'Content-Type': 'x-www-form-urlencoded', 'Authorization': `Bearer ${this.authToken}`});
     
-    this.http
-         .post(this.baseURL+`account`, body, {headers: headers}).subscribe(data => {});
+    return new Promise(resolve => {
+      this.http
+        .post(this.baseURL+`account`, body, {headers: headers}).subscribe(data => {
+          if(data.json()) {
+            resolve(data.json());
+          } else {
+            resolve(false);
+          }
+      });
+    });
   }
 }
