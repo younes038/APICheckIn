@@ -3,9 +3,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { MapsPage } from '../pages/maps/maps';
-import { LoginPage } from '../pages/login/login';
-import { CheckInPage } from '../pages/checkin/checkin';
-import { HomePage } from '../pages/home/home';
+import { LoginPage, Signup } from '../pages/login/login';
+import { AccountPage } from '../pages/account/account';
+import { CheckInPage, AddCheckin } from '../pages/checkin/checkin';
+import { CheckinDetailPage } from '../pages/checkin-detail/checkin-detail';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CheckInService } from '../services/checkin.service';
 
@@ -14,8 +15,11 @@ import { CheckInService } from '../services/checkin.service';
     MyApp,
     MapsPage,
     LoginPage,
+    Signup,
+    AccountPage,
     CheckInPage,
-    HomePage,
+    AddCheckin,
+    CheckinDetailPage,
     TabsPage
   ],
   imports: [
@@ -26,8 +30,11 @@ import { CheckInService } from '../services/checkin.service';
     MyApp,
     MapsPage,
     LoginPage,
+    Signup,
+    AccountPage,
     CheckInPage,
-    HomePage,
+    AddCheckin,
+    CheckinDetailPage,
     TabsPage
   ],
   providers: [CheckInService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
