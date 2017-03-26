@@ -1,0 +1,45 @@
+<!--
+  Generated template for the CheckinDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Détail du checkin</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card *ngIf="checkin">
+
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="{{checkin.user.picture_url}}" onError="this.src='./assets/images/defaultUser.png';" alt="">
+      </ion-avatar>
+      <h3>Posté par :</h3>
+      <p>{{checkin.user.name}}</p>
+    </ion-item>
+
+    <img src="{{checkin.image_path}}" onError="this.src='./assets/images/default.jpg';" alt="">
+    
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col center text-right>
+        <ion-note>
+          {{checkin.created_at | date:"MM/dd/yy h:mm"}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+  <div #carte id="carte"></div>
+</ion-content>
