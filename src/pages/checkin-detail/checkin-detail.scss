@@ -1,4 +1,10 @@
 page-checkin-detail {
+	.card {
+		margin: 0 !important;
+		width: 100%;
+		box-shadow: none;
+	}
+
 	#carte {
 		width: 100%;
 		height: 250px;

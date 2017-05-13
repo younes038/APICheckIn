@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Geocoder, GeocoderRequest, GeocoderResult } from 'ionic-native';
 
 import {
 GoogleMap,
@@ -26,12 +27,20 @@ import { CheckIn } from '../../services/checkin';
 })
 export class CheckinDetailPage {
   checkin: CheckIn;
+  address: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private checkinService: CheckInService) {
     this.checkinService = checkinService;
     this.checkinService.getCheckIn(this.navParams.get('id')).subscribe(
         data => {
             this.checkin = data;
+            let req: GeocoderRequest = new GoogleMapsLatLng(this.checkin.lat, this.checkin.lng);
+            Geocoder.geocode(req).then((results: GeocoderResult) => {
+              this.address = [
+                (results[0].thoroughfare || "") + " " + (results[0].subThoroughfare || ""),
+                results[0].locality
+              ].join(", ");
+            });
         },
         err => {
             console.log(err);
@@ -42,7 +51,7 @@ export class CheckinDetailPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CheckinDetailPage');
-    //this.loadMap();
+    this.loadMap();
   }
 
   loadMap() {
