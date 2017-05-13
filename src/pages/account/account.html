@@ -9,7 +9,7 @@
   <ion-navbar>
     <ion-title>Mon compte</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="logout()">
+      <button ion-button icon-only class="button button-icon" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
@@ -18,55 +18,57 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card *ngIf="user">
-    <img alt="" [src]="user.picture_url" onError="this.src='./assets/images/defaultUser.png';"/>
-    
-    <ion-card-content>
-      <ion-list>
+<ion-content>
+  <ion-grid *ngIf="user">
+    <form (submit)="updateAccount(user)">
+      <ion-row>
+        <ion-card>
+          <img alt="" [src]="user.picture_url" onError="this.src='./assets/images/defaultUser.png';"/>
+          <ion-input type="hidden" name="picture_url" [(ngModel)]="user.picture_url" [disabled] style="display:none"></ion-input>
+          <ion-card-content>
+            <ion-list>
 
-        <ion-item>
-          <ion-label fixed>Nom</ion-label>
-          <ion-input type="text" [value]="user.name"></ion-input>
-        </ion-item>
+              <ion-item>
+                <ion-label fixed>Nom</ion-label>
+                <ion-input type="text" [value]="user.name" name="name" [(ngModel)]="user.name"></ion-input>
+              </ion-item>
 
-        <ion-item>
-          <ion-label fixed>eMail</ion-label>
-          <ion-input type="email" [value]="user.name"></ion-input>
-        </ion-item>
+              <ion-item>
+                <ion-label fixed>eMail</ion-label>
+                <ion-input type="email" [value]="user.email" name="email" [(ngModel)]="user.email"></ion-input>
+              </ion-item>
 
-        <ion-item>
-          <ion-label>Créé le {{user.created_at | date:"MM/dd/yy h:mm"}}</ion-label>
-          <ion-icon name="mail"></ion-icon>
-        </ion-item>
+              <ion-item>
+                <ion-label>Créé le {{user.created_at | date:"MM/dd/yy h:mm"}}</ion-label>
+              </ion-item>
 
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col text-center>
+          Sélectionner une image:
+        </ion-col>
+      </ion-row>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col text-center>
-        Sélectionner une image:
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <div round ion-button role="button button-icon button-md button-round-md" class="button button-icon" (click)="openGallery()">
+            <ion-icon name="images"></ion-icon>
+          </div>
+          <div round ion-button role="button button-icon button-md button-round-md" class="button button-icon" (click)="takePicture()">
+            <ion-icon name="camera"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col text-center>
-        <div round ion-button role="button button-icon button-md button-round-md" class="button button-icon" (click)="openGallery()">
-          <ion-icon name="images"></ion-icon>
-        </div>
-        <div round ion-button role="button button-icon button-md button-round-md" class="button button-icon" (click)="takePicture()">
-          <ion-icon name="camera"></ion-icon>
-        </div>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col text-center>
-        <button ion-button block class="button button-icon" (click)="updateAccount()">Mettre à jour</button>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button block class="button button-icon" type="submit">Mettre à jour</button>
+        </ion-col>
+      </ion-row>
+    </form>
   </ion-grid>
-  
 </ion-content>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Camera } from 'ionic-native';
 
-import { CheckInPage } from '../checkin/checkin';
+import { HomePage } from '../home/home';
 import { CheckInService } from '../../services/checkin.service';
 import { CheckIn } from '../../services/checkin';
 
@@ -16,14 +17,15 @@ import { CheckIn } from '../../services/checkin';
   templateUrl: 'account.html'
 })
 export class AccountPage {
-  user: Object;
+  user: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private checkinService: CheckInService) {
     this.checkinService = checkinService;
     this.checkinService.getAccount().subscribe(
-        data => {
-            this.user = data;
-        }
+      data => {
+        this.user = data;
+        this.user.picture_url = (this.user.picture_url == null ? '':this.user.picture_url)
+      }
     );
   }
 
@@ -33,11 +35,39 @@ export class AccountPage {
 
   logout() {
     this.checkinService.logout();
-    this.navCtrl.setRoot(CheckInPage);
+    this.navCtrl.setRoot(HomePage);
   }
 
-  updateAccount() {
-    this.checkinService.updateAccount(this.user);
+  updateAccount(user) {
+    this.checkinService.updateAccount(user).then(data => {
+      if (data) {
+        this.user = data;
+      }
+    });
+  }
+
+  takePicture(){
+    Camera.getPicture({
+      destinationType: Camera.DestinationType.DATA_URL,
+      encodingType: Camera.EncodingType.JPEG,
+      mediaType: Camera.MediaType.PICTURE,
+      correctOrientation: true
+    }).then((image) => {
+        this.user.picture_url = 'data:image/jpeg;base64,'+image;
+    }, (err) => {
+        console.log(err);
+    });
+  }
+
+  openGallery(){
+    Camera.getPicture({
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: Camera.DestinationType.DATA_URL
+    }).then((image) => {
+        this.user.picture_url = 'data:image/jpeg;base64,'+image;
+      }, (err) => {
+        console.log(err);
+    });   
   }
 
 }
