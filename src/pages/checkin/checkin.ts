@@ -96,7 +96,10 @@ export class CheckInPage {
 
         <ion-row>
           <ion-col text-center>
-            <button ion-button block class="button button-icon" (click)="addCheckin()">Confirmer</button>
+            <form (submit)="addCheckin()">
+              <ion-input type="hidden" name="image" [(ngModel)]="checkin.image" [disabled] style="display:none"></ion-input>
+              <button ion-button block class="button button-icon" type="submit">Confirmer</button>
+            </form>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -121,9 +124,11 @@ export class AddCheckin {
     });
   }
 
-  addCheckin(image) {
-    this.checkin.image = image;
-    this.checkinService.addCheckIn(this.checkin);
+  addCheckin() {
+    this.checkinService.addCheckIn(this.checkin).then(() => {
+      console.log(this.checkin.image)
+      this.dismiss();
+    });
   }
 
   takePicture(){
@@ -139,9 +144,9 @@ export class AddCheckin {
     });
   }
 
-  gotoGallery(){
+  openGallery(){
     Camera.getPicture({
-      sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: Camera.DestinationType.DATA_URL
     }).then((image) => {
         this.checkin.image = 'data:image/jpeg;base64,'+image;
