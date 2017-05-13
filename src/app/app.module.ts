@@ -2,8 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+import { HomePage, SignupPage } from '../pages/home/home';
 import { MapsPage } from '../pages/maps/maps';
-import { LoginPage, Signup } from '../pages/login/login';
 import { AccountPage } from '../pages/account/account';
 import { CheckInPage, AddCheckin } from '../pages/checkin/checkin';
 import { CheckinDetailPage } from '../pages/checkin-detail/checkin-detail';
@@ -13,14 +13,14 @@ import { CheckInService } from '../services/checkin.service';
 @NgModule({
   declarations: [
     MyApp,
+    HomePage,
+    TabsPage,
     MapsPage,
-    LoginPage,
-    Signup,
+    SignupPage,
     AccountPage,
     CheckInPage,
     AddCheckin,
-    CheckinDetailPage,
-    TabsPage
+    CheckinDetailPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -28,14 +28,14 @@ import { CheckInService } from '../services/checkin.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    HomePage,
+    TabsPage,
     MapsPage,
-    LoginPage,
-    Signup,
+    SignupPage,
     AccountPage,
     CheckInPage,
     AddCheckin,
-    CheckinDetailPage,
-    TabsPage
+    CheckinDetailPage
   ],
   providers: [CheckInService, {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

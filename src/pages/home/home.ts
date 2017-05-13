@@ -1,24 +1,21 @@
-import { Component,  } from '@angular/core';
-import { NavController, NavParams, ModalController, ViewController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 
-import { CheckInPage } from '../checkin/checkin';
+import { TabsPage } from '../tabs/tabs';
 import { CheckInService } from '../../services/checkin.service';
 
-/*
-  Generated class for the Login page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: 'page-home',
+  templateUrl: 'home.html'
 })
-export class LoginPage {
+export class HomePage {
   user: Object;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private checkinService: CheckInService, public modalCtrl: ModalController) {
     this.checkinService = checkinService;
+    if (this.checkinService.isLogged()) {
+      this.navCtrl.setRoot(TabsPage);
+    }
     this.user = {
       email: '',
       password: ''
@@ -32,13 +29,13 @@ export class LoginPage {
   authenticate(user) {
     this.checkinService.authenticate(user).then(data => {
       if(data) {
-        this.navCtrl.setRoot(CheckInPage);
+        this.navCtrl.setRoot(TabsPage);
       }
     });
   }
 
   register() {
-    let modal = this.modalCtrl.create(Signup);
+    let modal = this.modalCtrl.create(SignupPage);
     modal.present();
   }
 
@@ -82,7 +79,7 @@ export class LoginPage {
     </ion-content>
   `
 })
-export class Signup {
+export class SignupPage {
   user: Object;
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, private checkinService: CheckInService) {
@@ -97,7 +94,8 @@ export class Signup {
   signup(user) {
     this.checkinService.signup(user).then(data => {
       if (data) {
-        this.navCtrl.setRoot(CheckInPage);
+        this.dismiss();
+        this.navCtrl.setRoot(TabsPage);
       }
     });
   }

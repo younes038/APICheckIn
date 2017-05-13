@@ -1,0 +1,44 @@
+page-home {
+	.content {
+		background: url('../assets/images/grenoble.jpg') no-repeat;
+		background-position: center center;
+		background-attachment: fixed;
+		background-size: cover;
+
+		h1 {
+			font-family: 'Boogaloo', cursive;
+			font-size: 4em;
+			text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			color: rgb(80, 232, 226);
+			margin: 1em 0 !important;
+		}
+
+		ion-list {
+			margin: 0;
+
+			ion-item {
+				background: rgba(255, 255, 255, 0.4);
+				ion-input {
+					.text-input::-moz-placeholder { color: #383838; }
+					.text-input:-ms-input-placeholder { color: #383838; }
+					.text-input::-webkit-input-placeholder { color: #383838; }
+					color: #1d1d1d;
+					font-weight: bolder;
+				}
+			}
+		}
+
+		.btn-auth {
+			button {
+				margin: 0;
+			}
+		}
+
+		#register-btn {
+			.button-inner {
+				color: white;
+				text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+			}
+		}
+	}
+}
